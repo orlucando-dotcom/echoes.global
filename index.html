@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echoes - Fondazione Orlando</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,900;1,900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #030303; color: #f1f5f9; }
+        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="selection:bg-indigo-500 overflow-x-hidden">
+
+    <!-- NAV BAR -->
+    <nav class="p-5 border-b border-white/5 flex justify-between items-center bg-black/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <i class="fas fa-lock text-white"></i>
+            </div>
+            <span class="text-2xl font-black italic tracking-tighter uppercase text-white">Echoes</span>
+        </div>
+        <button onclick="showSection('mission')" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">
+            La Storia di Luca
+        </button>
+    </nav>
+
+    <!-- SEZIONE HOME -->
+    <main id="home-section" class="max-w-4xl mx-auto px-6 py-16 text-center space-y-12">
+        <div class="inline-block p-4 bg-indigo-500/10 rounded-2xl text-indigo-500 border border-indigo-500/20 animate-pulse-slow">
+            <i class="fas fa-heart text-3xl"></i>
+        </div>
+        
+        <h1 class="text-6xl md:text-8xl font-black italic uppercase tracking-tighter leading-none text-white">
+            RENDI I TUOI RICORDI <br> <span class="text-indigo-500 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-400">ETERNI.</span>
+        </h1>
+        
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed italic">
+            "Echoes è la cassaforte digitale per i tuoi messaggi più cari. Proteggi la tua storia e consegnala nel futuro a chi ami, per sempre."
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-5 justify-center pt-8">
+            <button onclick="showSection('create')" class="w-full sm:w-auto px-12 py-6 bg-indigo-600 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] shadow-2xl shadow-indigo-600/40 hover:scale-105 transition-transform">
+                Inizia Ora (Gratis)
+            </button>
+            <button onclick="showSection('mission')" class="w-full sm:w-auto px-12 py-6 bg-white/5 border border-white/10 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] hover:bg-white/10 transition-all">
+                Manifesto Fondatore
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-20 text-left">
+            <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/5">
+                <i class="fas fa-shield-alt text-emerald-500 text-2xl mb-4"></i>
+                <h3 class="text-white font-black uppercase text-sm mb-2 italic">Crittografia Totale</h3>
+                <p class="text-slate-500 text-xs italic leading-relaxed">I tuoi messaggi sono protetti da protocolli militari. Solo il destinatario potrà sbloccarli.</p>
+            </div>
+            <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/5">
+                <i class="fas fa-clock text-amber-500 text-2xl mb-4"></i>
+                <h3 class="text-white font-black uppercase text-sm mb-2 italic">Consegna Programmata</h3>
+                <p class="text-slate-500 text-xs italic leading-relaxed">Scegli una data futura: 5, 10 o 50 anni. Noi ci assicuriamo che le tue parole arrivino a destinazione.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- SEZIONE MISSIONE (LA TUA STORIA) -->
+    <section id="mission-section" class="hidden max-w-3xl mx-auto px-6 py-16">
+        <div class="bg-gradient-to-br from-indigo-900/40 to-black p-12 rounded-[4rem] border border-indigo-500/30 space-y-8 shadow-2xl">
+            <h2 class="text-4xl font-black italic text-white uppercase tracking-tighter">La Svolta del <span class="text-indigo-500">Fondatore</span></h2>
+            <div class="space-y-6 text-slate-300 italic text-lg leading-relaxed border-l-4 border-indigo-500/30 pl-8">
+                <p>"Mi chiamo Luca Orlando. Sono un operaio che ha deciso di non arrendersi al destino. Ho creato Echoes per garantire che il mio amore per mia moglie e i miei figli rimanga scritto nel tempo."</p>
+                <p>"Ogni Echo creato qui sostiene la nostra missione di protezione della memoria umana e aiuta la Fondazione Orlando nel suo impegno sociale."</p>
+            </div>
+            <button onclick="showSection('home')" class="text-indigo-400 font-black uppercase text-xs tracking-widest flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Torna alla Home
+            </button>
+        </div>
+    </section>
+
+    <!-- SEZIONE CREAZIONE (EARLY BIRD) -->
+    <section id="create-section" class="hidden max-w-2xl mx-auto px-6 py-16">
+        <div class="bg-slate-900/50 p-12 rounded-[4rem] border border-white/10 text-center space-y-8">
+            <i class="fas fa-star text-amber-400 text-4xl"></i>
+            <h2 class="text-4xl font-black italic text-white uppercase tracking-tighter leading-none">Accesso <span class="text-indigo-500">Prioritario</span></h2>
+            <p class="text-slate-400 italic">Stiamo aprendo i server in tutto il mondo. Lascia la tua email per essere il primo a creare il tuo lascito eterno.</p>
+            <input type="email" placeholder="Email del Fondatore" class="w-full bg-black/60 border border-white/10 rounded-2xl px-6 py-5 text-white outline-none focus:border-indigo-500 transition-all italic shadow-inner">
+            <button class="w-full py-6 bg-indigo-600 rounded-2xl text-[12px] font-black uppercase tracking-[0.4em] shadow-xl hover:bg-indigo-500 transition-all">
+                Prenota Posto nel Vault
+            </button>
+            <p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest italic">Zero costi iniziali. Privacy Garantita.</p>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-30 border-t border-white/5 mt-20">
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[2em] mb-4">Fondazione Orlando</p>
+        <p class="text-[8px] text-slate-600 italic">Echoes Global Network - Progetto Svolta 2024</p>
+    </footer>
+
+    <script>
+        function showSection(id) {
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('mission-section').classList.add('hidden');
+            document.getElementById('create-section').classList.add('hidden');
+            document.getElementById(id + '-section').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
