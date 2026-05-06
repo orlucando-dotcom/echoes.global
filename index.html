@@ -137,34 +137,50 @@
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
             const btnText = document.getElementById('btn-text');
-            const email = document.getElementById('user-email').value;
+            const emailValue = document.getElementById('user-email').value;
 
             btnText.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Invio in corso...';
             btn.disabled = true;
 
-            // --- LUCA: INCOLLA QUI IL TUO ID DI FORMSPREE ---
-            // Sostituisci 'xvgzvlow' con il tuo ID personale
+            // ID Formspree di Luca
             const myFormId = 'xwvybdeg'; 
-            const formspreeEndpoint = `https://formspree.io/f/xwvybdeg`;
+            const formspreeEndpoint = `https://formspree.io/f/${myFormId}`;
+
+            // Creiamo un oggetto FormData per assicurarci che Formspree legga i campi correttamente
+            const formData = new FormData();
+            formData.append('email', emailValue);
+            formData.append('message', 'Nuova registrazione utente per il Vault Echoes.');
+            formData.append('_subject', 'Nuovo Lead Fondatore: ' + emailValue);
 
             try {
                 const response = await fetch(formspreeEndpoint, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, message: "Nuovo Fondatore registrato!" })
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
 
                 if (response.ok) {
                     document.getElementById('form-container').classList.add('hidden');
                     document.getElementById('success-message').classList.remove('hidden');
                 } else {
-                    throw new Error();
+                    const data = await response.json();
+                    if (data.errors) {
+                        alert("Errore: " + data.errors.map(error => error.message).join(", "));
+                    } else {
+                        throw new Error();
+                    }
                 }
             } catch (error) {
-                // In caso di errore, mostriamo comunque il successo all'utente per non scoraggiarlo
-                // ma tu saprai che c'è stato un problema di configurazione
+                // Fallback di successo visivo anche se c'è un errore tecnico, 
+                // ma per testare usa la console o guarda le mail.
                 document.getElementById('form-container').classList.add('hidden');
                 document.getElementById('success-message').classList.remove('hidden');
+                console.error("Errore nell'invio:", error);
+            } finally {
+                btn.disabled = false;
+                btnText.innerText = "Attiva Accesso Fondatore";
             }
         });
     </script>
