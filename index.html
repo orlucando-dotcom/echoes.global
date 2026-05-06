@@ -112,7 +112,8 @@
                 
                 <div class="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-3">
                     <p class="text-slate-400 italic text-sm">Non hai ricevuto la mail? Parla direttamente con il Fondatore per sbloccare ora:</p>
-                    <a href="https://wa.me/+393420411080?text=Ciao%20Luca,%20ho%20richiesto%20l'accesso%20a%20Echoes%20ma%20non%20ho%20ricevuto%20la%20mail" target="_blank" class="flex items-center justify-center gap-3 py-4 bg-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all">
+                    <!-- Link WhatsApp dinamico aggiornato via JS -->
+                    <a id="whatsapp-link" href="#" target="_blank" class="flex items-center justify-center gap-3 py-4 bg-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all">
                         <i class="fab fa-whatsapp text-lg"></i> Sblocco Manuale WhatsApp
                     </a>
                 </div>
@@ -155,24 +156,26 @@
             btnText.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Criptazione...';
             btn.disabled = true;
 
-            // ID Formspree di Luca (Assicurati che questo sia il TUO ID corretto)
             const myFormId = 'xwvybdeg'; 
-            const formspreeEndpoint = `https://formspree.io/f/xwvybdeg`;
+            const formspreeEndpoint = `https://formspree.io/f/${myFormId}`;
 
             const formData = new FormData();
             formData.append('email', emailValue);
             formData.append('message', 'Richiesta sblocco Vault.');
             formData.append('_subject', 'ECHOES LEAD: ' + emailValue);
 
+            // Preparo il link WhatsApp personalizzato
+            const waNumber = "393420411080";
+            const waMsg = encodeURIComponent(`Ciao Luca, sono l'utente ${emailValue}. Ho richiesto l'accesso a Echoes ma non ho ricevuto la mail di conferma. Puoi aiutarmi?`);
+            document.getElementById('whatsapp-link').href = `https://wa.me/${waNumber}?text=${waMsg}`;
+
             try {
-                // Inviamo a Formspree (per farti arrivare la notifica)
                 await fetch(formspreeEndpoint, {
                     method: 'POST',
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
 
-                // Mostriamo il successo a prescindere (per velocità utente)
                 document.getElementById('form-container').classList.add('hidden');
                 document.getElementById('success-message').classList.remove('hidden');
                 startMatrixEffect();
