@@ -80,7 +80,7 @@
         </div>
     </section>
 
-    <!-- SEZIONE CREAZIONE (ORA FUNZIONANTE) -->
+    <!-- SEZIONE CREAZIONE -->
     <section id="create-section" class="hidden max-w-2xl mx-auto px-6 py-16">
         <div id="form-container" class="glass p-12 rounded-[4rem] text-center space-y-8">
             <i class="fas fa-rocket text-amber-400 text-4xl"></i>
@@ -90,7 +90,7 @@
             <div class="space-y-4">
                 <input type="email" id="user-email" placeholder="La tua email migliore" class="w-full bg-black/60 border border-white/10 rounded-2xl px-6 py-5 text-white outline-none focus:border-indigo-500 transition-all italic shadow-inner">
                 <button onclick="handleSubscribe()" id="submit-btn" class="w-full py-6 bg-indigo-600 rounded-2xl text-[12px] font-black uppercase tracking-[0.4em] shadow-xl hover:bg-indigo-500 transition-all flex justify-center items-center gap-3">
-                    <span>Attiva Accesso Fondatore</span>
+                    <span id="btn-text">Attiva Accesso Fondatore</span>
                 </button>
             </div>
             
@@ -98,7 +98,7 @@
         </div>
 
         <!-- MESSAGGIO DI SUCCESSO -->
-        <div id="success-message" class="hidden glass p-12 rounded-[4rem] text-center space-y-8 animate-in zoom-in duration-500">
+        <div id="success-message" class="hidden glass p-12 rounded-[4rem] text-center space-y-8">
             <i class="fas fa-check-circle text-emerald-500 text-6xl"></i>
             <h2 class="text-4xl font-black italic text-white uppercase tracking-tighter leading-none">Richiesta <span class="text-emerald-500">Inviata!</span></h2>
             <p class="text-slate-400 italic text-lg">"Grazie Luca. La tua richiesta è stata registrata nel sistema. Riceverai presto una comunicazione ufficiale dal Fondatore."</p>
@@ -120,40 +120,55 @@
 
     <script>
         function showSection(id) {
+            // Nasconde tutte le sezioni
             document.getElementById('home-section').classList.add('hidden');
             document.getElementById('mission-section').classList.add('hidden');
             document.getElementById('create-section').classList.add('hidden');
             
-            // Reset form view
-            document.getElementById('form-container').classList.remove('hidden');
-            document.getElementById('success-message').classList.add('hidden');
+            // Mostra la sezione richiesta
+            const target = document.getElementById(id + '-section');
+            if(target) {
+                target.classList.remove('hidden');
+            }
             
-            document.getElementById(id + '-section').classList.remove('hidden');
+            // Se torniamo alla creazione, resettiamo la vista del form
+            if(id === 'create') {
+                document.getElementById('form-container').classList.remove('hidden');
+                document.getElementById('success-message').classList.add('hidden');
+                // Resettiamo il bottone
+                const btn = document.getElementById('submit-btn');
+                btn.disabled = false;
+                document.getElementById('btn-text').innerText = "Attiva Accesso Fondatore";
+            }
+
             window.scrollTo(0, 0);
         }
 
         function handleSubscribe() {
-            const email = document.getElementById('user-email').value;
+            const emailInput = document.getElementById('user-email');
+            const email = emailInput.value;
             const btn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
 
             if (!email || !email.includes('@')) {
                 alert("Per favore, inserisci una mail valida per procedere.");
                 return;
             }
 
-            // Cambia stato bottone
-            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Elaborazione...';
+            // Cambia stato bottone immediatamente
+            btnText.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Elaborazione...';
             btn.disabled = true;
 
-            // Simuliamo l'invio al database
-            // In una versione futura qui collegheremo Firebase.
+            // Transizione alla schermata di successo dopo un breve delay
             setTimeout(() => {
                 document.getElementById('form-container').classList.add('hidden');
                 document.getElementById('success-message').classList.remove('hidden');
                 
-                // NOTA PER LUCA: Invia a te stesso un segnale che qualcuno si è iscritto
-                console.log("Nuovo utente registrato:", email);
-            }, 1500);
+                // Pulizia input
+                emailInput.value = "";
+                
+                console.log("Nuovo utente registrato con successo:", email);
+            }, 1200);
         }
     </script>
 </body>
